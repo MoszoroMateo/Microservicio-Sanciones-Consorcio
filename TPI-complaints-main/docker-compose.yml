@@ -1,0 +1,45 @@
+
+services:
+  app_complaints:
+    container_name: app_complaints
+    image: tpi-complaints:0.0.1-SNAPSHOT
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "9040:8040"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_complaints_db:3306/complaints_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=admin
+      #      - FILE_MANAGER_URL=http://host.docker.internal:8080
+      - API-FILEMANAGER=http://host.docker.internal:8080
+      - TZ=America/Argentina/Buenos_Aires
+      - SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE=America/Argentina/Buenos_Aires
+    depends_on:
+      mysql_complaints_db:
+        condition: service_healthy
+
+  mysql_complaints_db:
+    container_name: mysql_complaints_db
+    image: mysql:8.0.33
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_spanish_ci', '--init-connect=SET NAMES utf8mb4']
+    ports:
+      - "9041:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=complaints_db
+      - TZ=America/Argentina/Buenos_Aires
+      - LANG=C.UTF-8
+      - MYSQL_CHARACTER_SET_SERVER=utf8mb4
+      - MYSQL_COLLATION_SERVER=utf8mb4_spanish_ci
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql_complaints_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

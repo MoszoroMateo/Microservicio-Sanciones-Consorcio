@@ -1,0 +1,92 @@
+<div class="modal-content border border-2">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="complaintModal">CONSULTA INFORME</h1>
+    <button type="button" class="btn-close" (click)="close()"></button>
+  </div>
+  <div class="modal-body">
+
+    <h5>Información del Informe</h5>
+      <div class="row mb-3">
+          <div class="col-md-6">
+              <p><strong>Motivo</strong> {{ report?.reportReason.reportReason || 'N/A' }}</p>
+              <p><strong>Fecha</strong> {{ report?.createdDate | date:"dd/MM/yyyy" || 'N/A' }}</p>
+          </div>
+      
+          <div class="col-md-6">
+              <p><strong>Descripción</strong> {{ report?.description || 'N/A' }}</p>
+          </div>
+      </div>
+      <hr>
+
+        <h5>Denuncias</h5>
+      <div class="overflow-auto" style="max-height: 300px;">
+        <table class="table table-bordered">
+
+            <thead>
+                <tr>
+                  <th>Descripción</th>
+                  <th>Tipo de Denuncia</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>  
+              @for(complaint of report?.complaints; track $index){
+                <tr>
+                    <td>{{ complaint.description }}</td>
+                    <td>
+                      @if (complaint?.complaintReason==="Otro"){
+                        <p> {{ complaint?.complaintReason + " - " + complaint?.anotherReason || 'N/A' }}</p>
+          
+                      }
+                      @else {
+                        <p> {{ complaint?.complaintReason || 'N/A' }}</p>
+                      }
+                     </td>
+                    <td>{{ complaint.complaintState }}</td>
+                    <td>{{ complaint.createdDate | date:"dd/MM/yyyy" }}</td>
+                </tr>
+              
+              }
+            
+            </tbody>
+        </table>
+        <hr>
+      </div>
+       <h5>Advertencias</h5>
+      <div class="overflow-auto" style="max-height: 300px;">
+        <table class="table table-bordered">
+
+            <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>  
+              @for(a of advetencias; track $index){
+                <tr>
+                    <td>{{ a.createdDate | date:"dd/MM/yyyy"}}</td>
+                    <td><p> {{ a.description  }}</p></td>
+                </tr>
+              
+              }
+            
+            </tbody>
+        </table>
+        <hr>
+      </div>
+        <h5>Estado de la Multa</h5>
+      <div class="row mb-3">
+          <div class="col-md-6">
+              <p><strong>Estado</strong> {{ report?.reportState || 'N/A' }}</p>
+              <p><strong>Razón</strong> {{ report?.stateReason || 'N/A' }}</p>
+          </div>
+      </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Cerrar</button>
+  </div>
+</div>
+

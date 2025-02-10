@@ -1,0 +1,14 @@
+services:
+  mysql-database:
+    container_name: mysql-database
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: complaints_db
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volumen para persistencia de datos
+
+volumes:
+  mysql_data:  # Volumen declarado en la sección de volúmenes

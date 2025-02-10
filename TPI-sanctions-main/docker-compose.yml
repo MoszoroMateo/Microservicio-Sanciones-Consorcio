@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app_sanctions:
+    container_name: app_sanctions
+    image: tpi-sanctions:0.0.1-SNAPSHOT
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "9042:8042"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_sanctions_db:3306/sanctions_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+
+      - TZ=America/Argentina/Buenos_Aires
+      - SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE=America/Argentina/Buenos_Aires
+      - API-COMPLAINTS=http://host.docker.internal:9040
+    depends_on:
+      mysql_sanctions_db:
+        condition: service_healthy
+
+  mysql_sanctions_db:
+    container_name: mysql_sanctions_db
+    image: mysql:8.0.33
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_spanish_ci', '--init-connect=SET NAMES utf8mb4']
+    ports:
+      - "9043:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=sanctions_db
+      - TZ=America/Argentina/Buenos_Aires
+      - LANG=C.UTF-8
+      - MYSQL_CHARACTER_SET_SERVER=utf8mb4
+      - MYSQL_COLLATION_SERVER=utf8mb4_spanish_ci
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql_sanctions_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

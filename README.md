@@ -2,6 +2,8 @@
 
 **Microservicios para la gestión de sanciones en un consorcio**. Este proyecto fue desarrollado como parte de un trabajo en equipo para una aplicación completa destinada a la gestión de un consorcio. El curso se dividió en 7 grupos, cada uno encargado de un microservicio diferente, y nuestro grupo se encargó del apartado de sanciones.
 
+⚠️ **ATENCIÓN**: Este proyecto es un trabajo colaborativo desarrollado bajo metodologías ágiles, lo que implica que algunas funcionalidades podrían no estar completamente optimizadas. Durante la integración con otros microservicios, el sistema ha seguido siendo actualizado y refinado. Por lo tanto, algunas funcionalidades podrían estar en proceso de ajuste o mejora continua.
+
 ---
 
 ### 🛠️ **Objetivo y Alcance del Sistema**
@@ -38,8 +40,4 @@ Este proyecto fue desarrollado siguiendo **metodologías ágiles**, en particula
 - **Backend**: [Java / Spring Boot]
 - **Frontend**: [Angular]
 - **Base de Datos**: [MySql]
-
----
-
-⚠️ **ATENCIÓN**: Este proyecto es un trabajo colaborativo desarrollado bajo metodologías ágiles, lo que implica que algunas funcionalidades podrían no estar completamente optimizadas. Durante la integración con otros microservicios, el sistema ha seguido siendo actualizado y refinado. Por lo tanto, algunas funcionalidades podrían estar en proceso de ajuste o mejora continua.
 

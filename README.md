@@ -13,8 +13,8 @@ El sistema tiene como objetivo facilitar la gestión de sanciones en un consorci
 ### 🛠️ **Microservicios**
 
 Nuestro grupo desarrolló dos microservicios:  
-- **Advertencias**: Gestiona las advertencias emitidas a los miembros del consorcio, permitiendo registrar, modificar y consultar las advertencias.
-- **Multas**: Gestiona las multas, con funcionalidades para registrar, modificar, consultar y generar las multas.
+- **Complaints**: Gestiona las advertencias emitidas a los miembros del consorcio, permitiendo registrar, modificar y consultar las advertencias.
+- **Sanctions**: Gestiona las multas, con funcionalidades para registrar, modificar, consultar y generar las multas.
 
 Ambos microservicios están diseñados siguiendo el patrón **RESTful**, lo que permite una integración eficiente con otros componentes del sistema.
 
